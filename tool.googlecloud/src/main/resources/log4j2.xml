@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+		<Property name="log-path">D:/logs</Property>
+		<!-- Property name="log-path">/Users/maxwellyuen/Documents/logs</Property-->
+		<Property name="app_name">googlecloud</Property>
+	</Properties>
+	<Appenders>
+		<Console name="Console-Appender" target="SYSTEM_OUT">
+			<PatternLayout>
+				<pattern>
+					[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</pattern>
+				
+			</PatternLayout>
+		</Console>
+		<File name="App-File-Appender" fileName="${log-path}/${app_name}_app.log">
+			<PatternLayout>
+				<pattern>
+					[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</pattern>
+			</PatternLayout>
+		</File>
+		<File name="SpringBoot-File-Appender" fileName="${log-path}/${app_name}_springboot.log">
+			<PatternLayout>
+				<pattern>
+					[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</pattern>
+			</PatternLayout>
+		</File>
+	</Appenders>
+
+	<Loggers>
+		<Logger name="com.primecredit" level="info">
+			<AppenderRef ref="App-File-Appender" />
+		</Logger>
+		<Logger name="org.springframework" level="info" additivity="false">
+            <AppenderRef ref="SpringBoot-File-Appender"/>          
+        </Logger>
+		<Root level="debug">
+			<AppenderRef ref="Console-Appender" />
+		</Root>
+	</Loggers>
+
+</Configuration>
