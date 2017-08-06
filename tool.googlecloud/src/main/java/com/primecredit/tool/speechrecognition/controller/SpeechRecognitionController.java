@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.primecredit.tool.common.util.FileUtil;
-import com.primecredit.tool.common.util.WavFileHandler;
+import com.primecredit.tool.common.util.FileUtils;
 import com.primecredit.tool.common.wsobject.request.RecongnitionRequest;
 import com.primecredit.tool.common.wsobject.response.RecognitionResponse;
 import com.primecredit.tool.speechrecognition.services.GoogleSpeechConvertService;
@@ -46,14 +45,18 @@ public class SpeechRecognitionController {
 		sbTempFileName.append(".wav");
 		
 		try {
-			File sourceFile = FileUtil.generateFile(tempPath, sbTempFileName.toString(), request.getFileData());
-
+			File sourceFile = FileUtils.generateFile(tempPath, sbTempFileName.toString(), request.getFileData());
+			sourceFile.delete();
+			
+			sourceFile = FileUtils.generateFile(tempPath, sbTempFileName.toString(), request.getFileData());
 			List<String> speechTextList = googleSpeechConvertService.convert(sourceFile.getAbsolutePath());
 			response.setSpeechTextList(speechTextList);
+			response.setSuccess(true);
 			
 			sourceFile.delete();
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error("Exception - SpeechRecognitionController.recognition: " + e.getMessage());
+			response.setSuccess(false);
 		}
 		
 		return response;
