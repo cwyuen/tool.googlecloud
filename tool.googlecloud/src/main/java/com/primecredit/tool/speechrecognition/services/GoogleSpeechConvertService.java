@@ -60,9 +60,8 @@ public class GoogleSpeechConvertService {
 			Iterator<String> fileIter = tmpFiles.iterator();
 			while (fileIter.hasNext()) {
 				String tmpFileName = fileIter.next();
-				// Map<Integer, String> tmpMap =
-				// asyncRecognizeFile(tmpFileName);
-				Map<Integer, String> tmpMap = streamingRecognizeFile(tmpFileName);
+				Map<Integer, String> tmpMap = asyncRecognizeFile(tmpFileName);
+				//Map<Integer, String> tmpMap = streamingRecognizeFile(tmpFileName);
 
 				appendMapResult(resultMap, tmpMap);
 
@@ -179,6 +178,7 @@ public class GoogleSpeechConvertService {
 		return resultMap;
 	}
 
+	@SuppressWarnings("unused")
 	private Map<Integer, String> streamingRecognizeFile(String fileName) throws Exception, IOException {
 		Map<Integer, String> resultMap = new LinkedHashMap<Integer, String>();
 		
