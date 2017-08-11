@@ -46,9 +46,6 @@ public class SpeechRecognitionController {
 		
 		try {
 			File sourceFile = FileUtils.generateFile(tempPath, sbTempFileName.toString(), request.getFileData());
-			sourceFile.delete();
-			
-			sourceFile = FileUtils.generateFile(tempPath, sbTempFileName.toString(), request.getFileData());
 			List<String> speechTextList = googleSpeechConvertService.convert(sourceFile.getAbsolutePath());
 			response.setSpeechTextList(speechTextList);
 			response.setSuccess(true);
